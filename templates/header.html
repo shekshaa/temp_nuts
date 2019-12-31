@@ -37,7 +37,10 @@
             <a class="nav-link" href="{% url 'users:login' %}" id="login">ورود</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'users:signup' %}" id="signup">ثبت نام</a>
+            <a class="nav-link" href="{% url 'users:buyer_signup' %}" id="buyer_signup">ثبت نام خریدار</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'users:seller_signup' %}" id="seller_signup">ثبت نام فروشنده</a>
           </li>
         {% endif %}
       </ul>
@@ -50,8 +53,3 @@
 {% endblock %}
 
 <br><br>
-<footer class="py-2 bg-dark fixed-bottom" dir="rtl">
-  <div class="container">
-    <p class="m-0 text-center text-white">کپی‌رایت: Divar</p>
-  </div>
-</footer>

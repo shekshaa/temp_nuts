@@ -5,7 +5,7 @@ from django.views.generic import FormView, CreateView, UpdateView
 
 from users.models import Member
 from ads.models import Advertisement, Images
-from .forms import MemberActivationForm, MemberCreationForm
+from .forms import MemberActivationForm, BuyerCreationForm, SellerCreationForm
 
 
 class MemberActivationView(FormView):
@@ -20,13 +20,20 @@ class MemberActivationView(FormView):
         return get_object_or_404(Member, user__username=self.kwargs['username'])
 
 
-class MemberCreationView(CreateView):
-    form_class = MemberCreationForm
-    template_name = 'signup.html'
+class SellerCreationView(CreateView):
+    form_class = SellerCreationForm
+    template_name = 'seller_signup.html'
 
     def get_success_url(self):
         return reverse('users:activation', args=[self.request.POST['username']])
 
+
+class BuyerCreationView(CreateView):
+    form_class = BuyerCreationForm
+    template_name = 'buyer_signup.html'
+
+    def get_success_url(self):
+        return reverse('users:activation', args=[self.request.POST['username']])
 
 class EditProfileView(UpdateView):
     model = Member

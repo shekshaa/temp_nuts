@@ -8,9 +8,14 @@ from django.db.models.deletion import CASCADE
 
 
 class Member(models.Model):
+    MemberType = (
+        ('S', 'seller'),
+        ('B', 'buyer')
+    )
     user = models.OneToOneField(to=User, on_delete=CASCADE, related_name='member')
-    phone_number = models.CharField(max_length=12)
+    phone = models.CharField(max_length=12)
     address = models.CharField(max_length=30)
+    type = models.CharField(max_length=1, choices=MemberType)
 
     def __str__(self):
         return self.user.username
@@ -22,10 +27,6 @@ class Member(models.Model):
     @property
     def last_name(self):
         return self.user.last_name
-
-    @property
-    def name(self):
-        return self.first_name + ' ' + self.last_name
 
     @property
     def email(self):

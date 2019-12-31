@@ -9,7 +9,7 @@ from django.core.exceptions import ValidationError
 import random
 
 
-class MemberCreationForm(UserCreationForm):
+class SellerCreationForm(UserCreationForm):
     username = forms.CharField()
     password1 = forms.CharField(widget=forms.PasswordInput)
     password2 = forms.CharField(widget=forms.PasswordInput)
@@ -17,10 +17,11 @@ class MemberCreationForm(UserCreationForm):
     phone_validator = RegexValidator(regex=r'^\d{8,12}$', message=_("Please enter your phone number correctly!"))
     email = forms.CharField(validators=[email_validator])
     phone = forms.CharField(validators=[phone_validator])
+    address = forms.CharField()
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2', 'phone')
+        fields = ('last_name', 'username', 'email', 'password1', 'password2', 'phone', 'address')
 
     def notify(self, subject, message):
         send_mail(subject, message, from_email="sad@project.com", recipient_list=[self.cleaned_data['email']],
@@ -31,9 +32,44 @@ class MemberCreationForm(UserCreationForm):
         user.is_active = False
         user.save()
         code = random.randint(10000, 99999)
-        member = Member.objects.create(user=user)
+        member = Member.objects.create(user=user,
+                                       phone=self.cleaned_data['phone'],
+                                       address=self.cleaned_data['address'],
+                                       type='S')
         ActivationCode.objects.create(member=member, code=code)
-        message = 'Dear ' + user.username + '\n\nPlease verify you account by code: ' + str(code)
+        message = 'Dear Seller ' + user.username + ',\n\nPlease verify you account by code: ' + str(code)
+        self.notify('Nuts Email Verification', message)
+        return member
+
+class BuyerCreationForm(UserCreationForm):
+    username = forms.CharField()
+    password1 = forms.CharField(widget=forms.PasswordInput)
+    password2 = forms.CharField(widget=forms.PasswordInput)
+    email_validator = EmailValidator(message=_("Please enter your email correctly"))
+    phone_validator = RegexValidator(regex=r'^\d{8,12}$', message=_("Please enter your phone number correctly!"))
+    email = forms.CharField(validators=[email_validator])
+    phone = forms.CharField(validators=[phone_validator])
+    address = forms.CharField()
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'username', 'email', 'password1', 'password2', 'phone', 'address')
+
+    def notify(self, subject, message):
+        send_mail(subject, message, from_email="sad@project.com", recipient_list=[self.cleaned_data['email']],
+                  fail_silently=True)
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.is_active = False
+        user.save()
+        code = random.randint(10000, 99999)
+        member = Member.objects.create(user=user,
+                                       phone=self.cleaned_data['phone'],
+                                       address=self.cleaned_data['address'],
+                                       type='B')
+        ActivationCode.objects.create(member=member, code=code)
+        message = 'Dear Buyer ' + user.username + ',\n\nPlease verify you account by code: ' + str(code)
         self.notify('Nuts Email Verification', message)
         return member
 
