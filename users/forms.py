@@ -17,7 +17,7 @@ class SellerCreationForm(UserCreationForm):
     phone_validator = RegexValidator(regex=r'^\d{8,12}$', message=_("Please enter your phone number correctly!"))
     email = forms.CharField(validators=[email_validator])
     phone = forms.CharField(validators=[phone_validator])
-    address = forms.CharField()
+    address = forms.CharField(max_length=30)
 
     class Meta:
         model = User

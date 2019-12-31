@@ -37,7 +37,7 @@ class BuyerCreationView(CreateView):
 
 class EditProfileView(UpdateView):
     model = Member
-    fields = ['phone_number']
+    fields = ['phone', 'address']
     template_name = 'edit_profile.html'
     success_url = '/'
 
