@@ -23,6 +23,8 @@ for (let i = 0; i < inputs.length; i++) {
         inputs[i].innerText = 'شماره تماس:';
     else if (inputs[i].innerText.includes('Role'))
         inputs[i].innerText = 'نقش:';
+    else if (inputs[i].innerText.includes('Address'))
+        inputs[i].innerText = 'آدرس:';
 }
 
 creationTime = document.getElementById("creation_time");
