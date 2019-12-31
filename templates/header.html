@@ -20,16 +20,16 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog"
                  style="padding-left: 18px">
-              {% if user.type == 'S' %}
-                <a class="dropdown-item" href="{% url 'ads:my-ads' %}">آگهی‌های من</a> {% endif %}
+              {% if user.member.type == 'S' %}
+                <a class="dropdown-item" href="{% url 'ads:my-ads' %}">تبلیغ‌های من</a> {% endif %}
               <a class="dropdown-item" href="{% url 'users:change-password' %}">تغییر رمز عبور</a>
               <a class="dropdown-item" href="{% url 'users:edit-profile' %}">تغییر شماره تلفن و آدرس</a>
             </div>
           </li>
-          {% if user.type == 'S' %}
+          {% if user.member.type == 'S' %}
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'ads:create_advertisement' %}" id="create_advertisement">اضافه
-                  کردن آگهی</a>
+                  کردن تبلیغ</a>
               </li>
           {% endif %}
           <li class="nav-item">
