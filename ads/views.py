@@ -94,7 +94,7 @@ class AdvertisementViewView(TemplateView):
         context['category3'] = advertisement.category
         context['category2'] = advertisement.category.parent
         context['category1'] = advertisement.category.parent.parent
-        context['user_phone'] = advertisement.user.phone_number
+        context['user_phone'] = advertisement.user.phone
         context['user_email'] = advertisement.user.email
         context['sharable_link'] = 'ads/view/' + str(advertisement_id)
         context['images'] = Images.objects.filter(advertisement=advertisement_id)

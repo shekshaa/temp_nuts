@@ -7,11 +7,6 @@
     <div class="container" align="right" id="features">
         <div class="row" id="properties">
             <div class="col-lg-5">
-                <h2>{{ title }}
-                    {% if is_urgent %}
-                        <button type="button" class="btn btn-danger">فوری</button>
-                    {% endif %}
-                </h2>
 
                 <label id="creation_time">{{ creation_time }}</label>
 
@@ -41,10 +36,6 @@
                     <tr>
                         <td>ایمیل</td>
                         <td>{{ user_email }}</td>
-                    </tr>
-                    <tr>
-                        <td>لینک</td>
-                        <td>{{ sharable_link }}</td>
                     </tr>
                     </tbody>
                 </table>
